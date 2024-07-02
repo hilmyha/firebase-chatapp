@@ -1,9 +1,10 @@
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+import React from "react";
 
-export default function StartPage() {
+export default function Login() {
   return (
     <View style={styles.container}>
-      <ActivityIndicator size="large" color="gray" />
+      <Text>Login</Text>
     </View>
   );
 }
