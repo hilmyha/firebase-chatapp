@@ -18,9 +18,11 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import CustomKeyboardView from "../components/CustomKeyboardView";
+import { useAuth } from "../context/authContext";
 
 export default function Register() {
   const [loading, setLoading] = useState(false);
+  const { register } = useAuth();
 
   const usernameRef = useRef("");
   const profileRef = useRef("");
@@ -37,8 +39,22 @@ export default function Register() {
       Alert.alert("Register", "Please fill all the fields!");
       return;
     }
+    setLoading(true);
 
     // Register process
+    let response = await register(
+      emailRef.current,
+      passwordRef.current,
+      usernameRef.current,
+      profileRef.current
+    );
+    setLoading(false);
+
+    console.log(response);
+    if (!response.success) {
+      Alert.alert("Register", response.msg || "Failed to register!");
+      return;
+    }
   };
 
   return (

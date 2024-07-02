@@ -17,9 +17,11 @@ import {
 } from "react-native-responsive-screen";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useAuth } from "../context/authContext";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
 
   const emailRef = useRef("");
   const passwordRef = useRef("");
@@ -31,6 +33,13 @@ export default function Login() {
     }
 
     // login process
+    setLoading(true);
+    const response = await login(emailRef.current, passwordRef.current);
+    setLoading(false);
+    if (!response.success) {
+      Alert.alert("Sign In", response.msg || "Failed to sign in!");
+      return;
+    }
   };
 
   return (
